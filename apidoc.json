@@ -1,0 +1,9 @@
+{
+  "name": "Api Documentation",
+  "version": "0.1.0",
+  "title": "Api Docs",
+  "url" : "localhost:3000",
+  "footer": {
+    "title": "-"
+  }
+}

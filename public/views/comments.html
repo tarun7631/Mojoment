@@ -1,0 +1,54 @@
+<div class="comments-container" style="min-height: calc(100vh - 150px)">
+	<h4>{{post.topic}}</h4>
+	<div class="seperator"></div>
+	<p style="height: auto;max-height: fit-content">{{post.text}}</p>
+
+	<div><textarea rows="7" cols="50" ng-model="text"></textarea></div>
+	<button class="comment-button" ng-click="addComment()">Add Comment</button>
+
+	<hr>
+	<ul id="comments-list" class="comments-list" ng-if="comments.length">
+		<li ng-repeat="comment in comments track by $index" id="{{comment._id}}">
+			<div class="comment-main-level">
+
+				<div class="comment-avatar"><img src="https://i.stack.imgur.com/frlIf.png" alt=""></div>
+
+				<div class="comment-box">
+					<div class="comment-head">
+						<h6 class="comment-name by-author">{{comment.userName}}
+						</h6>
+						<span>{{comment.tim | date}}
+						</span>
+						<i class="fa fa-trash-o" ng-if="userId == comment.createdBy" ng-click="deleteComment(comment._id , null)"></i>
+						<i class="fa fa-pencil-square-o" ng-if="userId == comment.createdBy" ng-click="comment.isEdit = true"></i>
+
+
+					</div>
+					<div class="comment-content" ng-if="!comment.isEdit"> 
+						{{comment.text}}
+					</div>
+					<div class="comment-content" ng-if="comment.isEdit"> 
+						<textarea ng-model="comment.text">{{comment.text}}</textarea>
+						<button ng-click="editComment(comment._id , comment.text , null)">Submit</button>
+						<button ng-click="comment.isEdit = false">Cancel</button>
+					</div>
+				</div>
+				<div class="comment-box view-replies" style="box-shadow: initial;">
+					<span ng-click="loadReply(comment._id)" class="pc" >view replies</span>
+					<span class="ml40 pc" ng-if="!comment.replyButtonHidden" ng-click="comment.replyButtonHidden = true">reply</span>
+				</div>
+				<div class="comment-box view-replies" style="box-shadow: initial;padding: 0" ng-if="comment.replyButtonHidden"> 
+					<textarea ng-model="comment.reply"></textarea>
+					<button style="padding: 5px ; border: 1px solid" ng-click="saveReply(comment.reply,comment._id) ; comment.reply = null ; comment.replyButtonHidden = false">submit</button>
+				</div>
+			</div>
+		</li>
+	</ul>
+
+	<div ng-if="!comments.length" style="    font-size: 30px;
+	opacity: .3;
+	padding: 20px;
+	text-align: center;">
+	First to Comment
+</div>
+</div>
